@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+{% set nom = "" %}
+{% set id = 0 %}
+{% for scm in scms  %}
+    {% set nom = scm.nom %}
+    {% set id = scm.id %}
+{% endfor %}
+<div class="card text-center">
+    <div class="card-header">
+        <h1>
+            tableau de bord (admin): {{nom}}
+        </h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Charges</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Membres</h5>
+                  {% for user in users  %}
+                  <p class="card-text">{{user.username}}</p>
+                      
+                  {% endfor %}
+                  <a href="{{path('app_register', { id : id })}}" class="btn btn-primary">Ajouter un membre</a>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{ "now"|date("d/M/Y") }}
+    </div>
+  </div>
+
+
+{% endblock %}

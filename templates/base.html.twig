@@ -3,10 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+      
+        {% block stylesheets %}
+        {{ encore_entry_link_tags('app')}}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        {% endblock %}
     </head>
     <body>
+        {% block nav %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="nav-link" href="{{path('home')}}">Accueil</a>
+            {% if app.user %}           
+                {{ app.user.username }} vous êtes connecté
+                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="nav-link" href="{{ path('dash') }}">Tableau de bord</a>
+                {% endif %}           
+            {% else %}
+                <a class="nav-link" href="{{path('create_scm')}}">Créer une SCM</a>
+                <a class="nav-link" href="{{path('app_login')}}">Login</a>            
+            {% endif %}
+        </nav>
+        {% endblock %}
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        {{ encore_entry_script_tags("app") }}
+        {% endblock %}
     </body>
 </html>

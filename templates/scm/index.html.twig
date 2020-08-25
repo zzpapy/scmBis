@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block title %}Nouvelle session{% endblock %}
+
+{% block body %}
+
+ {{ form_start(formUser) }}
+         {{ form_row(formScm) }}
+        {{ form_row(formUser) }}
+        <button type="submit" class="btn">Register</button>
+{{ form_end(formUser) }} 
+{% endblock %}
