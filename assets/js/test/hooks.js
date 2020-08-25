@@ -16,8 +16,6 @@ async function jsonldFetch(url,method = "GET", data=null){
         return null
     }
     const responseData =await response.json()
-    console.log(responseData,'toto')
-    // console.log(response.ok)
     
    
     if(response.ok){

@@ -18,9 +18,9 @@
                 <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a class="nav-link" href="{{ path('dash') }}">Tableau de bord</a>
+                    <a class="nav-link" href="{{path('create_scm')}}">Créer une SCM</a>
                 {% endif %}           
             {% else %}
-                <a class="nav-link" href="{{path('create_scm')}}">Créer une SCM</a>
                 <a class="nav-link" href="{{path('app_login')}}">Login</a>            
             {% endif %}
         </nav>
