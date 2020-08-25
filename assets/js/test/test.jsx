@@ -1,14 +1,17 @@
 import {render, unmountComponentAtNode} from "react-dom"
 import React, {useEffect,useCallback} from "react"
 import { usePaginatedFetch, useFetch } from './hooks'
+import {Icon} from '../components/Icon'
 
 const Toto = React.memo(({scm}) => {
     console.log(scm)
  return <p>{scm.nom}</p>
 })
 
-const Title = (count) => {
-    return <h3>Nombres de scm actuellement {count}</h3>
+function Title({count}){
+    return <h3>
+        <Icon icon="comments" />
+        {count} Commentaire{count > 1 ? 's': ''} </h3>
 }
 
 function Test () {
@@ -17,7 +20,7 @@ function Test () {
         load()        
     },[])
     return <div>
-        {/* <Title count={count} /> */}
+        <Title count={count} />
         {console.log(count)}
         {loading && 'chargement...'}
         {scms.map((scm) => <Toto scm={scm} key={scm.id}/>)}
