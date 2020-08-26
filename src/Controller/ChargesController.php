@@ -30,6 +30,7 @@ class ChargesController extends AbstractController
             $formCharges = $this->createForm(ChargesType::class, $charges);
             $formCharges->handleRequest($request);
             $charges->setScm($scm);
+            $charges->setPayedAt(null);
             if($formCharges->isSubmitted() && $formCharges->isValid()){
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($charges);

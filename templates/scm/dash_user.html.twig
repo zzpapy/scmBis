@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+{% set total = 0  %}
+{% set montant = 0  %}
+{% set user = app.user %}
+<div class="card text-center">
+    <div class="card-header">
+        <h1>
+            tableau de bord pour : {{nom}}
+        </h1>
+    </div>
+    <div class="card-body">
+      <div class="row">
+          <div class="">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Charges</h5>
+                
+                <table id="table_id" class="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th>Dénomination</th>
+                          <th>type</th>
+                          <th>Montant</th>
+                          <th>Date</th>
+                          <th>Echéance</th>
+                          <th>payé le</th>
+                      </tr>
+                  </thead>
+                  <tbody>                 
+                    {% for charge in charges  %}
+                          <tr>
+                              <td>{{charge.nom}}</td>
+                              {% if charge.type == 1 %}
+                                {% set type = "variable" %}
+                              {% else %}
+                                {% set type = "fixe"  %}
+                              {% endif %}
+                              <td>{{type}}</td>
+                              <td>{{charge.montant}} €</td>
+                              {% set total = total + charge.montant %}
+                              <td>{{charge.createdAt | date("d/m/Y")}}</td>
+                              <td>{{charge.paymentAt | date("d/m/Y")}}</td>
+                              <td>{{charge.payedAt | date("d/m/Y")}}</td>
+                          </tr>                    
+                    {% endfor %}
+                  </tbody>
+              </table>
+              <p>total des charges : {{total}} €</p>
+              </div>
+            </div>
+          </div>
+            <div class="col-sm-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile</h5>
+                        <p>Nom : {{user.username}}</p>
+                        <p>Nombre de parts : {{user.nbPart}}</p>
+                        {% set montant = (total * user.nbPart)/ 100 %}
+                        <p>A régler : {{montant}} €</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{ "now"|date("d/m/Y") }}
+    </div>
+  </div>
+
+
+{% endblock %}

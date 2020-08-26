@@ -18,9 +18,16 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        
         $scmRepo = $this->getDoctrine()->getRepository(Scm::class);
         $scm = $scmRepo->findOneBy(["id" => $request->get("id")]);
         // dd($request->get("id"));
+        $users = $scm->getUser();
+        $nbPart = 0;
+        foreach ($users as $value) {
+            $nbPart += $value->getNbPart();
+        }
+        // dd($nbPart);
         $user = new User();
         $user->addScm($scm);
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -40,11 +47,12 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('dash');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'nbPart' => $nbPart
         ]);
     }
 }

@@ -8,6 +8,7 @@
     {% endfor %}
 
     <h1>Register</h1>
+    <p>Nombre de parts restantes à attribuer : {{100-nbPart}}</p>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}

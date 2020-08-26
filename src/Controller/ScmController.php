@@ -61,30 +61,27 @@ class ScmController extends AbstractController
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $isConnected = $this->isGranted('ROLE_USER');
         if (!$hasAccess) {
-            // dd($hasAccess);
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('dash_user');
         }
         elseif($isConnected){
-            if(!$userNew){
-                $userNew = new User();
-            }
+            // if(!$userNew){
+            //     $userNew = new User();
+            // }
             $user = $this->getUser();
             $scm = $user->getScms();
             $users = $scm[0]->getUser();
             $formUser = $this->createForm(RegistrationFormType::class, $user);
             $formUser->handleRequest($request);
-            $userNew->addScm($scm[0]);
             if($formUser->isSubmitted() && $formUser->isValid()){
+                $userNew->addScm($scm[0]);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($userNew);
-                // dd($formUser->get('username')->getData());
                 $em->flush();
-                // return $this->redirectToRoute('session');
+                return $this->redirectToRoute('dash');
             }
             $charges = $scm[0]->getCharges();
-            // dd($charges);
 
-            return $this->render('home/dash.html.twig', [
+            return $this->render('scm/dash.html.twig', [
                 "scms" => $scm,
                 "user" => $user,
                 "users" => $users,
@@ -92,6 +89,23 @@ class ScmController extends AbstractController
                 "charges" => $charges
             ]);
         }
-
+    }
+     /**
+     * @Route("/dash_user", name="dash_user")
+     */
+    public function dashUser(Request $request, User $userNew = null)
+    {
+        $user = $this->getUser();
+        $scm = $user->getScms()[0];
+        // dd($scm);
+        return $this->render('scm/dash_user.html.twig', [
+            "scms" => $scm,
+            "user" => $user,
+            "nom" => $scm->getNom(),
+            "charges" => $scm->getCharges()
+            // "users" => $users,
+            // "formUser" => $formUser->createView(),
+            // "charges" => $charges
+        ]);
     }
 }
