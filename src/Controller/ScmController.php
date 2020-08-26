@@ -81,11 +81,15 @@ class ScmController extends AbstractController
                 $em->flush();
                 // return $this->redirectToRoute('session');
             }
+            $charges = $scm[0]->getCharges();
+            // dd($charges);
+
             return $this->render('home/dash.html.twig', [
                 "scms" => $scm,
                 "user" => $user,
                 "users" => $users,
-                "formUser" => $formUser->createView()
+                "formUser" => $formUser->createView(),
+                "charges" => $charges
             ]);
         }
 

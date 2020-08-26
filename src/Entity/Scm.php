@@ -41,9 +41,15 @@ class Scm
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Charges::class, mappedBy="scm", orphanRemoval=true)
+     */
+    private $charges;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->charges = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,6 +114,37 @@ class Scm
     {
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Charges[]
+     */
+    public function getCharges(): Collection
+    {
+        return $this->charges;
+    }
+
+    public function addCharge(Charges $charge): self
+    {
+        if (!$this->charges->contains($charge)) {
+            $this->charges[] = $charge;
+            $charge->setScm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharge(Charges $charge): self
+    {
+        if ($this->charges->contains($charge)) {
+            $this->charges->removeElement($charge);
+            // set the owning side to null (unless already changed)
+            if ($charge->getScm() === $this) {
+                $charge->setScm(null);
+            }
         }
 
         return $this;

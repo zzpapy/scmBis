@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ChargesController!{% endblock %}
+
+{% block body %}
+{{ form_start(formCharges) }}
+        {{ form_row(formCharges) }}
+        <button type="submit" class="btn">Register</button>
+{{ form_end(formCharges) }} 
+{% endblock %}

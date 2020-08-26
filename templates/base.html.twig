@@ -6,7 +6,10 @@
       
         {% block stylesheets %}
         {{ encore_entry_link_tags('app')}}
+        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+  
         {% endblock %}
     </head>
     <body>
@@ -18,9 +21,9 @@
                 <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a class="nav-link" href="{{ path('dash') }}">Tableau de bord</a>
-                    <a class="nav-link" href="{{path('create_scm')}}">Créer une SCM</a>
                 {% endif %}           
             {% else %}
+                    <a class="nav-link" href="{{path('create_scm')}}">Créer une SCM</a>
                 <a class="nav-link" href="{{path('app_login')}}">Login</a>            
             {% endif %}
         </nav>
@@ -28,6 +31,10 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
         {{ encore_entry_script_tags("app") }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="{{asset('scripts/script.js')}}"></script>
         {% endblock %}
     </body>
 </html>
