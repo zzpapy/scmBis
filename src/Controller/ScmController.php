@@ -61,6 +61,7 @@ class ScmController extends AbstractController
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $isConnected = $this->isGranted('ROLE_USER');
         if (!$hasAccess) {
+            $curl = curl_init();
             return $this->redirectToRoute('dash_user');
         }
         elseif($isConnected){
@@ -72,13 +73,18 @@ class ScmController extends AbstractController
             $users = $scm[0]->getUser();
             $formUser = $this->createForm(RegistrationFormType::class, $user);
             $formUser->handleRequest($request);
-            if($formUser->isSubmitted() && $formUser->isValid()){
-                $userNew->addScm($scm[0]);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($userNew);
-                $em->flush();
-                return $this->redirectToRoute('dash');
+            $nbPart = 0;
+            foreach ($users as $value) {
+                $nbPart += $value->getNbPart();
             }
+            // dd($nbPart);
+            // if($formUser->isSubmitted() && $formUser->isValid()){
+            //     $userNew->addScm($scm[0]);
+            //     $em = $this->getDoctrine()->getManager();
+            //     $em->persist($userNew);
+            //     $em->flush();
+            //     return $this->redirectToRoute('dash');
+            // }
             $charges = $scm[0]->getCharges();
 
             return $this->render('scm/dash.html.twig', [
@@ -86,7 +92,8 @@ class ScmController extends AbstractController
                 "user" => $user,
                 "users" => $users,
                 "formUser" => $formUser->createView(),
-                "charges" => $charges
+                "charges" => $charges,
+                "nbPart" => $nbPart
             ]);
         }
     }
@@ -97,6 +104,24 @@ class ScmController extends AbstractController
     {
         $user = $this->getUser();
         $scm = $user->getScms()[0];
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://testscm-sandbox.biapi.pro/2.0/auth/register",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{\n  \"email\": \"myemail@mydomain.com\",\n  \"password\": \"testtest\",\n \"application\": \"scmtest\,\n }",
+            CURLOPT_HTTPHEADER => array(
+              "authorization: Bearer rlQh1Dp_DX5kUjZDpxkAfl8puGH8LJoraWCD81qm3eT5BmWeERPocbYfn4sqjNb_OBaOL4OjapRauCFG20Q2xa8nue_oO1NPt84vizgcniaovT6sT67zyec1XCNniUcz",
+              "content-type: application/json"
+            ),
+          ));
+          
+          $response = curl_exec($curl);
+          dump($response);
         // dd($scm);
         return $this->render('scm/dash_user.html.twig', [
             "scms" => $scm,

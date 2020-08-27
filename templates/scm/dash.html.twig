@@ -17,12 +17,12 @@
 <div class="card text-center">
     <div class="card-header">
         <h1>
-            tableau de bord (admin): {{nom}}
+          tableau de bord (admin): {{nom}}
         </h1>
     </div>
     <div class="card-body">
       <div class="row">
-          <div class="">
+          <div class="col-sm-6">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Charges</h5>
@@ -63,7 +63,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Membres</h5>
@@ -87,7 +87,11 @@
                     {% endfor %}
                   </tbody>
                 </table>
-                <a href="{{path('app_register', { id : id })}}" class="btn btn-primary">Ajouter un membre</a>
+                {% if nbPart >= 100 %}
+                  <p>Toutes les parts de la soviété ont été distribuées</p>
+                {% else %}
+                  <a href="{{path('app_register', { id : id })}}" class="btn btn-primary">Ajouter un membre</a>                  
+                {% endif %}
               </div>
             </div>
           </div>
