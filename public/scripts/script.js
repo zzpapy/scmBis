@@ -51,21 +51,47 @@ $(document).ready( function () {
 
     //   var request = require("request");
 
-var url = 'https://testscm-sandbox.biapi.pro/2.0/'
-var options = { method: 'GET',
-headers: {
-    'content-type': 'application/json',
-    authorization: 'Bearer rlQh1Dp_DX5kUjZDpxkAfl8puGH8LJoraWCD81qm3eT5BmWeERPocbYfn4sqjNb_OBaOL4OjapRauCFG20Q2xa8nue_oO1NPt84vizgcniaovT6sT67zyec1XCNniUcz',
+// var url = 'https://testscm-sandbox.biapi.pro/2.0/'
+// var options = { method: 'GET',
+// headers: {
+//     'content-type': 'application/json',
+//     authorization: 'Bearer rlQh1Dp_DX5kUjZDpxkAfl8puGH8LJoraWCD81qm3eT5BmWeERPocbYfn4sqjNb_OBaOL4OjapRauCFG20Q2xa8nue_oO1NPt84vizgcniaovT6sT67zyec1XCNniUcz',
    
-},
-form:{
-        "email": "myemail@example.org",
-        "password": "test",
-        "application": "testscm"
-      }
+// },
+// form:{
+//         "email": "myemail@example.org",
+//         "password": "test",
+//         "application": "testscm"
+//       }
 
-};
+// };
 
-fetch(url,options)
-.then((response) => response.json())
-.catch((error) => console.error(error))
+// fetch(url,options)
+// .then((response) => response.json())
+// .catch((error) => console.error(error))
+// $form.submit(function (e){
+
+//     e.preventDefault()
+//     $form.find('.button').attr("disabled",true)
+//     Stripe.createToken({$form}, function(status,response){
+//         debugger
+//     })
+// })
+
+// var stripe = Stripe("pk_test_51HL4HeDz4TKnqe2ZOCU3IUhRRfbZt8WFqE5pWvGc8VuaaUQ3n2PxquMrfgNawh8QlAV1FbO5pKQKUFeeOeo27pDI00pNG9VcQW")
+
+// var elements = stripe.elements()
+// var cardElement = elements.create('card')
+// var cardElement = elements.getElement('card')
+// var $form = $('#paye')
+
+// cardElement.mount('#card-element');
+
+// cardElement.on('change', function(event) {
+//     if (event.complete) {
+//       // enable payment button
+//       console.log('toto')
+//     } else if (event.error) {
+//       // show validation to customer
+//     }
+//   })

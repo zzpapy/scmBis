@@ -101,6 +101,20 @@
         {{ "now"|date("d/m/Y") }}
     </div>
   </div>
+  {# <label for="card-element">Card</label>
+  <div id="card-element"></div> #}
+  <card-card></card-card>
+  {# <div>
+    <form action="payment.php" id="paye">
+      <input type="text" name="name">
+      <input type="text" name="email">
+      <input type="text" placeholder="code cb" data-stripe="number">
+      <input type="text" placeholder="mm" data-stripe="exp_month">
+      <input type="text" placeholder="yy" data-stripe="exp_year">
+      <input type="text" placeholder="cvc" data-stripe="cvc">
+      <button type="submit" class="button">Payer</button>
+    </form>
+  </div> #}
 
 
 {% endblock %}
